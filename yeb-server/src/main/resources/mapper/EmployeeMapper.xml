@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangyu.server.mapper.EmployeeMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhangyu.server.pojo.Employee">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="CHAR"/>
+            <result property="birthday" column="birthday" jdbcType="DATE"/>
+            <result property="idcard" column="idCard" jdbcType="CHAR"/>
+            <result property="wedlock" column="wedlock" jdbcType="OTHER"/>
+            <result property="nationid" column="nationId" jdbcType="INTEGER"/>
+            <result property="nativeplace" column="nativePlace" jdbcType="VARCHAR"/>
+            <result property="politicid" column="politicId" jdbcType="INTEGER"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="departmentid" column="departmentId" jdbcType="INTEGER"/>
+            <result property="joblevelid" column="jobLevelId" jdbcType="INTEGER"/>
+            <result property="posid" column="posId" jdbcType="INTEGER"/>
+            <result property="engageform" column="engageForm" jdbcType="VARCHAR"/>
+            <result property="tiptopdegree" column="tiptopDegree" jdbcType="OTHER"/>
+            <result property="specialty" column="specialty" jdbcType="VARCHAR"/>
+            <result property="school" column="school" jdbcType="VARCHAR"/>
+            <result property="begindate" column="beginDate" jdbcType="DATE"/>
+            <result property="workstate" column="workState" jdbcType="OTHER"/>
+            <result property="workid" column="workID" jdbcType="CHAR"/>
+            <result property="contractterm" column="contractTerm" jdbcType="DOUBLE"/>
+            <result property="conversiontime" column="conversionTime" jdbcType="DATE"/>
+            <result property="notworkdate" column="notWorkDate" jdbcType="DATE"/>
+            <result property="begincontract" column="beginContract" jdbcType="DATE"/>
+            <result property="endcontract" column="endContract" jdbcType="DATE"/>
+            <result property="workage" column="workAge" jdbcType="INTEGER"/>
+            <result property="salaryid" column="salaryId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,gender,
+        birthday,idCard,wedlock,
+        nationId,nativePlace,politicId,
+        email,phone,address,
+        departmentId,jobLevelId,posId,
+        engageForm,tiptopDegree,specialty,
+        school,beginDate,workState,
+        workID,contractTerm,conversionTime,
+        notWorkDate,beginContract,endContract,
+        workAge,salaryId
+    </sql>
+</mapper>

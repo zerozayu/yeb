@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangyu.server.mapper.SalaryMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhangyu.server.pojo.Salary">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="basicsalary" column="basicSalary" jdbcType="INTEGER"/>
+            <result property="bonus" column="bonus" jdbcType="INTEGER"/>
+            <result property="lunchsalary" column="lunchSalary" jdbcType="INTEGER"/>
+            <result property="trafficsalary" column="trafficSalary" jdbcType="INTEGER"/>
+            <result property="allsalary" column="allSalary" jdbcType="INTEGER"/>
+            <result property="pensionbase" column="pensionBase" jdbcType="INTEGER"/>
+            <result property="pensionper" column="pensionPer" jdbcType="FLOAT"/>
+            <result property="createdate" column="createDate" jdbcType="TIMESTAMP"/>
+            <result property="medicalbase" column="medicalBase" jdbcType="INTEGER"/>
+            <result property="medicalper" column="medicalPer" jdbcType="FLOAT"/>
+            <result property="accumulationfundbase" column="accumulationFundBase" jdbcType="INTEGER"/>
+            <result property="accumulationfundper" column="accumulationFundPer" jdbcType="FLOAT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,basicSalary,bonus,
+        lunchSalary,trafficSalary,allSalary,
+        pensionBase,pensionPer,createDate,
+        medicalBase,medicalPer,accumulationFundBase,
+        accumulationFundPer,name
+    </sql>
+</mapper>
