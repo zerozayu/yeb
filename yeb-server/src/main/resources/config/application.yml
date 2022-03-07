@@ -41,3 +41,13 @@ mybatis-plus:
 logging:
   level:
     com.zhangyu.server.mapper: debug
+
+jwt:
+  # JWT 存储的请求头
+  tokenHeader: Authorization
+  # JWT 加密使用的密钥
+  secret: yeb-secret
+  # JWT 的超时时间(60*60*24)
+  expiration: 604800
+  # JWT 负载中拿到的开头
+  tokenHead: Bearer
