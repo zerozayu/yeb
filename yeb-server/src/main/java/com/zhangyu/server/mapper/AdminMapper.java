@@ -2,6 +2,7 @@ package com.zhangyu.server.mapper;
 
 import com.zhangyu.server.pojo.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author zhangyu
