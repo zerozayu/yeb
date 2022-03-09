@@ -84,7 +84,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     public Admin getAdminByUserName(String username) {
         return adminMapper.selectOne(new QueryWrapper<Admin>()
                 .eq("username", username)
-                .eq("enabled", true));
+                .eq("enabled", 1));
     }
 
 
