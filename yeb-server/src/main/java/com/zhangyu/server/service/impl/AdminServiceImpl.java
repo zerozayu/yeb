@@ -7,6 +7,7 @@ import com.zhangyu.server.pojo.Admin;
 import com.zhangyu.server.pojo.RespBean;
 import com.zhangyu.server.service.AdminService;
 import com.zhangyu.server.mapper.AdminMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,17 +28,17 @@ import java.util.Map;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         implements AdminService {
-    private final AdminMapper adminMapper;
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenUtils jwtTokenUtils;
+    @Autowired
+    private AdminMapper adminMapper;
 
-    public AdminServiceImpl(AdminMapper adminMapper, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, JwtTokenUtils jwtTokenUtils) {
-        this.adminMapper = adminMapper;
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenUtils = jwtTokenUtils;
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtTokenUtils jwtTokenUtils;
 
     @Value("jwt.tokenHead")
     private String tokenHead;
