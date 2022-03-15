@@ -40,7 +40,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
 
-    @Value("jwt.tokenHead")
+    @Value("${jwt.tokenHead}")
     private String tokenHead;
 
     /**
