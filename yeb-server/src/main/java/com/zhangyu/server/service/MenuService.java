@@ -3,6 +3,8 @@ package com.zhangyu.server.service;
 import com.zhangyu.server.pojo.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author zhangyu
 * @description 针对表【t_menu】的数据库操作Service
@@ -10,4 +12,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface MenuService extends IService<Menu> {
 
+    /**
+     * 通过用户id查询菜单列表
+     * @return
+     */
+    List<Menu> getMenusByAdminId();
 }

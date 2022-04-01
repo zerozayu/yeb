@@ -16,6 +16,21 @@
             <result property="parentid" column="parentId" jdbcType="INTEGER"/>
             <result property="enabled" column="enabled" jdbcType="TINYINT"/>
     </resultMap>
+    
+    <resultMap id="Menus" type="com.zhangyu.server.pojo.Menu" extends="BaseResultMap">
+        <collection property="children" ofType="com.zhangyu.server.pojo.Menu">
+            <id property="id" column="id2" jdbcType="INTEGER"/>
+            <result property="url" column="url2" jdbcType="VARCHAR"/>
+            <result property="path" column="path2" jdbcType="VARCHAR"/>
+            <result property="component" column="component2" jdbcType="VARCHAR"/>
+            <result property="name" column="name2" jdbcType="VARCHAR"/>
+            <result property="iconcls" column="iconCls2" jdbcType="VARCHAR"/>
+            <result property="keepalive" column="keepAlive2" jdbcType="TINYINT"/>
+            <result property="requireauth" column="requireAuth2" jdbcType="TINYINT"/>
+            <result property="parentid" column="parentId2" jdbcType="INTEGER"/>
+            <result property="enabled" column="enabled2" jdbcType="TINYINT"/>
+        </collection>
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,url,path,
@@ -23,4 +38,31 @@
         keepAlive,requireAuth,parentId,
         enabled
     </sql>
+
+    <select id="getMenusByAdminId" resultMap="Menus">
+        SELECT
+            DISTINCT
+            m1.*,
+            m2.id as id2,
+            m2.url as url2,
+            m2.`path` as path2,
+            m2.component as component2,
+            m2.name as name2,
+            m2.iconcls as iconcls2,
+            m2.keepalive as keepalive2,
+            m2.requireauth as requireauth2,
+            m2.parentid as parentid2,
+            m2.enabled as enabled2
+        FROM
+            t_menu m1 ,
+            t_menu m2 ,
+            t_admin_role ar ,
+            t_menu_role mr
+        WHERE
+            m1.id = m2.parentId
+          and m2.id = mr.mid
+          and mr.rid = ar.rid
+          and ar.adminId = #{id}
+          and m2.enabled = 1
+    </select>
 </mapper>
