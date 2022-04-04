@@ -1,4 +1,4 @@
-package com.zhangyu.server.config.security;
+package com.zhangyu.server.config.security.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhangyu.server.pojo.RespBean;
@@ -21,7 +21,7 @@ import java.io.PrintWriter;
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();

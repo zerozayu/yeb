@@ -3,8 +3,10 @@ package com.zhangyu.server.service;
 import com.zhangyu.server.pojo.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhangyu.server.pojo.RespBean;
+import com.zhangyu.server.pojo.Role;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author zhangyu
@@ -29,4 +31,11 @@ public interface AdminService extends IService<Admin> {
      * @return
      */
     Admin getAdminByUserName(String username);
+
+    /**
+     * 根据用户id查询角色列表
+     * @param adminId
+     * @return
+     */
+    List<Role> getRoles(Integer adminId);
 }

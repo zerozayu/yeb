@@ -2,9 +2,11 @@ package com.zhangyu.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhangyu.server.config.security.JwtTokenUtils;
+import com.zhangyu.server.config.security.component.JwtTokenUtils;
+import com.zhangyu.server.mapper.RoleMapper;
 import com.zhangyu.server.pojo.Admin;
 import com.zhangyu.server.pojo.RespBean;
+import com.zhangyu.server.pojo.Role;
 import com.zhangyu.server.service.AdminService;
 import com.zhangyu.server.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -92,6 +98,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         return adminMapper.selectOne(new QueryWrapper<Admin>()
                 .eq("username", username)
                 .eq("enabled", 1));
+    }
+
+    @Override
+    public List<Role> getRoles(Integer adminId) {
+        return roleMapper.getRoles(adminId);
     }
 
 

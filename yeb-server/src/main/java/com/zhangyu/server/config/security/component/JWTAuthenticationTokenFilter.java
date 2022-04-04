@@ -1,4 +1,4 @@
-package com.zhangyu.server.config.security;
+package com.zhangyu.server.config.security.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +47,7 @@ public class JWTAuthenticationTokenFilter extends OncePerRequestFilter {
                 // 验证token是否有效，重新设置用户对象
                 if (jwtTokenUtils.validateToken(authToken, userDetails)){
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    // 重新设置到用户对象里面去 todo 没懂。。。。
+                    // 重新设置到用户对象里面去
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }

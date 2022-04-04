@@ -1,7 +1,6 @@
 package com.zhangyu.server.controller;
 
 import com.zhangyu.server.pojo.Menu;
-import com.zhangyu.server.service.AdminService;
 import com.zhangyu.server.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

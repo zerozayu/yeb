@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -67,8 +68,13 @@ public class Menu implements Serializable {
      */
     private Integer enabled;
 
+    @ApiModelProperty(value = "子菜单")
     @TableField(exist = false)
     private List<Menu> children;
+
+    @ApiModelProperty(value = "角色列表")
+    @TableField(exist = false)
+    private List<Role> roles;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.zhangyu.server.config.security;
+package com.zhangyu.server.config.security.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhangyu.server.pojo.RespBean;

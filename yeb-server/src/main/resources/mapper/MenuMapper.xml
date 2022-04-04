@@ -31,6 +31,14 @@
             <result property="enabled" column="enabled2" jdbcType="TINYINT"/>
         </collection>
     </resultMap>
+    
+    <resultMap id="MenusWithRole" type="com.zhangyu.server.pojo.Menu" extends="BaseResultMap">
+        <collection property="roles" ofType="com.zhangyu.server.pojo.Role">
+            <id property="id" column="rid" jdbcType="INTEGER"/>
+            <result property="name" column="rname" jdbcType="VARCHAR"/>
+            <result property="namezh" column="rnameZh" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,url,path,
@@ -39,6 +47,7 @@
         enabled
     </sql>
 
+    <!-- 根据用户id查询菜单列表 -->
     <select id="getMenusByAdminId" resultMap="Menus">
         SELECT
             DISTINCT
@@ -64,5 +73,25 @@
           and mr.rid = ar.rid
           and ar.adminId = #{id}
           and m2.enabled = 1
+        ORDER BY
+            m2.id
+    </select>
+
+    <!-- 根据角色获取菜单列表 -->
+    <select id="getMenusWithRole" resultMap="MenusWithRole">
+        SELECT
+            m.*,
+            r.id AS rid,
+            r.name AS rname,
+            r.nameZh AS rnameZh
+        FROM
+            t_menu m,
+            t_menu_role mr,
+            t_role r
+        WHERE
+            m.id = mr.mid
+          AND mr.rid = r.id
+        ORDER BY
+            m.id
     </select>
 </mapper>
