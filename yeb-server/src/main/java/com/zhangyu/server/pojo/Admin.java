@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @TableName(value ="t_admin")
+@ApiModel(value = "Admin对象", description = "实现了UserDetails")
 public class Admin implements Serializable, UserDetails {
 
     @ApiModelProperty(value = "id")
