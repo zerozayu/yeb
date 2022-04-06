@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2022/4/5 10:37
  */
 @RestController
-@RequestMapping("/system/cfg/pos")
+@RequestMapping("/system/basic/pos")
 public class PositionController {
     @Autowired
     private PositionService positionService;
@@ -59,7 +59,7 @@ public class PositionController {
 
     @ApiOperation(value = "批量删除职位信息")
     @DeleteMapping("/")
-    public RespBean deletePositionByIds(Integer[] ids){
+    public RespBean deletePositionByIds(@RequestParam Integer[] ids){
         if (positionService.removeByIds(Arrays.asList(ids))){
             return RespBean.success("批量删除职位信息成功");
         }
