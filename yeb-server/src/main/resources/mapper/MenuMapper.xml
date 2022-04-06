@@ -16,7 +16,7 @@
             <result property="parentid" column="parentId" jdbcType="INTEGER"/>
             <result property="enabled" column="enabled" jdbcType="TINYINT"/>
     </resultMap>
-    
+
     <resultMap id="Menus" type="com.zhangyu.server.pojo.Menu" extends="BaseResultMap">
         <collection property="children" ofType="com.zhangyu.server.pojo.Menu">
             <id property="id" column="id2" jdbcType="INTEGER"/>
@@ -31,12 +31,25 @@
             <result property="enabled" column="enabled2" jdbcType="TINYINT"/>
         </collection>
     </resultMap>
-    
+
     <resultMap id="MenusWithRole" type="com.zhangyu.server.pojo.Menu" extends="BaseResultMap">
         <collection property="roles" ofType="com.zhangyu.server.pojo.Role">
             <id property="id" column="rid" jdbcType="INTEGER"/>
             <result property="name" column="rname" jdbcType="VARCHAR"/>
             <result property="namezh" column="rnameZh" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    
+    <resultMap id="MenusWithChildren" type="com.zhangyu.server.pojo.Menu">
+        <id property="id" column="id1" jdbcType="INTEGER"/>
+        <result property="name" column="name1" jdbcType="VARCHAR"/>
+        <collection property="children" ofType="com.zhangyu.server.pojo.Menu">
+            <id property="id" column="id2" jdbcType="INTEGER"/>
+            <result property="name" column="name2" jdbcType="VARCHAR"/>
+            <collection property="children" ofType="com.zhangyu.server.pojo.Menu">
+                <id property="id" column="id3" jdbcType="INTEGER"/>
+                <result property="name" column="name3" jdbcType="VARCHAR"/>
+            </collection>
         </collection>
     </resultMap>
 
@@ -93,5 +106,22 @@
           AND mr.rid = r.id
         ORDER BY
             m.id
+    </select>
+    <select id="getAllMenus" resultMap="MenusWithChildren">
+        SELECT
+            m1.id AS id1,
+            m1.`name` AS name1,
+            m2.id AS id2,
+            m2.`name` AS name2,
+            m3.id AS id3,
+            m3.`name` AS name3
+        FROM
+            t_menu m1,
+            t_menu m2,
+            t_menu m3
+        WHERE
+            m1.id = m2.parentId
+          AND m2.id = m3.parentId
+          AND m3.enabled = 1
     </select>
 </mapper>
