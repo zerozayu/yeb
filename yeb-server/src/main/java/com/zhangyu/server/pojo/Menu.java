@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,56 +17,38 @@ import java.util.List;
  */
 @Data
 @TableName(value ="t_menu")
+@ApiModel(value = "菜单实体类", description = "")
 public class Menu implements Serializable {
-    /**
-     * id
-     */
+
+    @ApiModelProperty(value = "id")
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * url
-     */
+    @ApiModelProperty(value = "url")
     private String url;
 
-    /**
-     * path
-     */
+    @ApiModelProperty(value = "path")
     private String path;
 
-    /**
-     * 组件
-     */
+    @ApiModelProperty(value = "组件")
     private String component;
 
-    /**
-     * 菜单名
-     */
+    @ApiModelProperty(value = "菜单名")
     private String name;
 
-    /**
-     * 图标
-     */
+    @ApiModelProperty(value = "图标")
     private String iconcls;
 
-    /**
-     * 是否保持激活
-     */
+    @ApiModelProperty(value = "是否保持激活")
     private Integer keepalive;
 
-    /**
-     * 是否要求权限
-     */
+    @ApiModelProperty(value = "是否要求权限")
     private Integer requireauth;
 
-    /**
-     * 父id
-     */
+    @ApiModelProperty(value = "父id")
     private Integer parentid;
 
-    /**
-     * 是否启用
-     */
+    @ApiModelProperty(value = "是否启用")
     private Integer enabled;
 
     @ApiModelProperty(value = "子菜单")
