@@ -5,22 +5,48 @@
 <mapper namespace="com.zhangyu.server.mapper.AdminMapper">
 
     <resultMap id="BaseResultMap" type="com.zhangyu.server.pojo.Admin">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="phone" column="phone" jdbcType="CHAR"/>
-            <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
-            <result property="address" column="address" jdbcType="VARCHAR"/>
-            <result property="enabled" column="enabled" jdbcType="TINYINT"/>
-            <result property="username" column="username" jdbcType="VARCHAR"/>
-            <result property="password" column="password" jdbcType="VARCHAR"/>
-            <result property="userface" column="userFace" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="CHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="userface" column="userFace" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="AdminWithRole" type="com.zhangyu.server.pojo.Admin" extends="BaseResultMap">
+        <collection property="roles" ofType="com.zhangyu.server.pojo.Role">
+            <id property="id" column="rid" jdbcType="INTEGER"/>
+            <result property="name" column="rname" jdbcType="VARCHAR"/>
+            <result property="namezh" column="rnameZh" jdbcType="VARCHAR"/>
+        </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,phone,
+        id
+        ,name,phone,
         telephone,address,enabled,
         username,password,userFace,
         remark
     </sql>
+
+    <!-- 查询所有的操作员，不包含当前登录用户 -->
+    <select id="getAllAdmin" resultMap="AdminWithRole">
+        SELECT a.*,
+               r.id     AS rid,
+               r.`name` AS rname,
+               r.nameZh AS rnameZh
+        FROM t_admin a
+                 LEFT JOIN t_admin_role ar ON a.id = ar.adminId
+                 LEFT JOIN t_role r ON r.id = ar.rid
+        WHERE a.id != #{id}
+            <if test="null!=keywords and ''!=keywords">
+                AND a.`name` LIKE CONCAT( '%', #{keywords}, '%' )
+            </if>
+        ORDER BY
+            a.id
+    </select>
 </mapper>

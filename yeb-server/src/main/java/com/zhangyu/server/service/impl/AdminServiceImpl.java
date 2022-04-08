@@ -2,6 +2,7 @@ package com.zhangyu.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhangyu.server.AdminUtils;
 import com.zhangyu.server.config.security.component.JwtTokenUtils;
 import com.zhangyu.server.mapper.RoleMapper;
 import com.zhangyu.server.pojo.Admin;
@@ -100,9 +101,24 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
                 .eq("enabled", 1));
     }
 
+    /**
+     * 根据用户id查询角色列表
+     * @param adminId
+     * @return
+     */
     @Override
     public List<Role> getRoles(Integer adminId) {
         return roleMapper.getRoles(adminId);
+    }
+
+    /**
+     * 获取所有操作员
+     * @param keywords
+     * @return
+     */
+    @Override
+    public List<Admin> getAllAdmin(String keywords) {
+        return adminMapper.getAllAdmin(AdminUtils.getCurrentAdmin().getId(), keywords);
     }
 
 
