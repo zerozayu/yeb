@@ -13,8 +13,21 @@
             <result property="isparent" column="isParent" jdbcType="TINYINT"/>
     </resultMap>
 
+    <!-- 获取所有部门 -->
+    <resultMap id="DepartmentWithChildren" type="com.zhangyu.server.pojo.Department" extends="BaseResultMap">
+        <collection property="children" ofType="com.zhangyu.server.pojo.Department"
+                    select="com.zhangyu.server.mapper.DepartmentMapper.getAllDepartments" column="id">
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,name,parentId,
         depPath,enabled,isParent
     </sql>
+    <select id="getAllDepartments" resultMap="DepartmentWithChildren">
+        select
+        <include refid="Base_Column_List"/>
+        from t_department
+        where parentId = #{parentId}
+    </select>
 </mapper>

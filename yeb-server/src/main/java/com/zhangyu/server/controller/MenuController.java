@@ -2,6 +2,7 @@ package com.zhangyu.server.controller;
 
 import com.zhangyu.server.pojo.Menu;
 import com.zhangyu.server.service.MenuService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.List;
  * @author zhangyu
  * @date 2022/4/1 22:21
  */
+@Api(tags = "MenuController")
 @RestController
 @RequestMapping("/system/cfg")
 public class MenuController {

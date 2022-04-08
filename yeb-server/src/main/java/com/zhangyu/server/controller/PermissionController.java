@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
  * @author zhangyu
  * @date 2022/4/6 21:50
  */
+@Api(tags = "PermissionController")
 @RestController
 @RequestMapping("/system/basic/permiss")
 public class PermissionController {

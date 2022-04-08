@@ -3,6 +3,7 @@ package com.zhangyu.server.controller;
 import com.zhangyu.server.pojo.Position;
 import com.zhangyu.server.pojo.RespBean;
 import com.zhangyu.server.service.PositionService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author zhangyu
  * @date 2022/4/5 10:37
  */
+@Api(tags = "PositionController")
 @RestController
 @RequestMapping("/system/basic/pos")
 public class PositionController {
