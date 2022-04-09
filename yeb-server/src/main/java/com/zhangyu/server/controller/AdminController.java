@@ -2,11 +2,12 @@ package com.zhangyu.server.controller;
 
 import com.zhangyu.server.pojo.Admin;
 import com.zhangyu.server.pojo.RespBean;
+import com.zhangyu.server.pojo.Role;
 import com.zhangyu.server.service.AdminService;
+import com.zhangyu.server.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private RoleService roleService;
 
     @ApiOperation(value = "获取所有操作员")
     @GetMapping("/")
@@ -47,5 +50,17 @@ public class AdminController {
             return RespBean.success("删除操作员成功");
         }
         return RespBean.error("删除操作员失败");
+    }
+
+    @ApiOperation(value = "获取所有角色")
+    @GetMapping("/roles")
+    public List<Role> getAllRoles(){
+        return roleService.list();
+    }
+
+    @ApiOperation(value = "更新操作员角色")
+    @PutMapping("/role")
+    public RespBean updateAdminRole(Integer adminId, Integer[] rids){
+        return adminService.updateAdminRole(adminId, rids);
     }
 }

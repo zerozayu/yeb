@@ -4,20 +4,24 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhangyu.server.AdminUtils;
 import com.zhangyu.server.config.security.component.JwtTokenUtils;
+import com.zhangyu.server.mapper.AdminRoleMapper;
 import com.zhangyu.server.mapper.RoleMapper;
 import com.zhangyu.server.pojo.Admin;
+import com.zhangyu.server.pojo.AdminRole;
 import com.zhangyu.server.pojo.RespBean;
 import com.zhangyu.server.pojo.Role;
 import com.zhangyu.server.service.AdminService;
 import com.zhangyu.server.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +42,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private AdminRoleMapper adminRoleMapper;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -119,6 +126,23 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     @Override
     public List<Admin> getAllAdmin(String keywords) {
         return adminMapper.getAllAdmin(AdminUtils.getCurrentAdmin().getId(), keywords);
+    }
+
+    /**
+     * 更新操作员角色
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    @Override
+    @Transactional
+    public RespBean updateAdminRole(Integer adminId, Integer[] rids) {
+        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("adminId", adminId));
+        Integer result = adminRoleMapper.addAdminRole(adminId, rids);
+        if (rids.length == result){
+            return RespBean.success("更新操作员角色成功");
+        }
+        return RespBean.error("更新操作员角色失败");
     }
 
 
