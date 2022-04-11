@@ -2,6 +2,9 @@ package com.zhangyu.server.service;
 
 import com.zhangyu.server.pojo.Employee;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhangyu.server.pojo.RespPageBean;
+
+import java.time.LocalDate;
 
 /**
 * @author zhangyu
@@ -10,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface EmployeeService extends IService<Employee> {
 
+    /**
+     * 获取所有员工信息（分页）
+     * @param currentPage
+     * @param size
+     * @param employee
+     * @param beginDateScope
+     * @return
+     */
+    RespPageBean getEmployee(Integer currentPage, Integer size, Employee employee, LocalDate[] beginDateScope);
 }

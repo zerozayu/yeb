@@ -5,39 +5,64 @@
 <mapper namespace="com.zhangyu.server.mapper.EmployeeMapper">
 
     <resultMap id="BaseResultMap" type="com.zhangyu.server.pojo.Employee">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="gender" column="gender" jdbcType="CHAR"/>
-            <result property="birthday" column="birthday" jdbcType="DATE"/>
-            <result property="idcard" column="idCard" jdbcType="CHAR"/>
-            <result property="wedlock" column="wedlock" jdbcType="OTHER"/>
-            <result property="nationid" column="nationId" jdbcType="INTEGER"/>
-            <result property="nativeplace" column="nativePlace" jdbcType="VARCHAR"/>
-            <result property="politicid" column="politicId" jdbcType="INTEGER"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
-            <result property="phone" column="phone" jdbcType="VARCHAR"/>
-            <result property="address" column="address" jdbcType="VARCHAR"/>
-            <result property="departmentid" column="departmentId" jdbcType="INTEGER"/>
-            <result property="joblevelid" column="jobLevelId" jdbcType="INTEGER"/>
-            <result property="posid" column="posId" jdbcType="INTEGER"/>
-            <result property="engageform" column="engageForm" jdbcType="VARCHAR"/>
-            <result property="tiptopdegree" column="tiptopDegree" jdbcType="OTHER"/>
-            <result property="specialty" column="specialty" jdbcType="VARCHAR"/>
-            <result property="school" column="school" jdbcType="VARCHAR"/>
-            <result property="begindate" column="beginDate" jdbcType="DATE"/>
-            <result property="workstate" column="workState" jdbcType="OTHER"/>
-            <result property="workid" column="workID" jdbcType="CHAR"/>
-            <result property="contractterm" column="contractTerm" jdbcType="DOUBLE"/>
-            <result property="conversiontime" column="conversionTime" jdbcType="DATE"/>
-            <result property="notworkdate" column="notWorkDate" jdbcType="DATE"/>
-            <result property="begincontract" column="beginContract" jdbcType="DATE"/>
-            <result property="endcontract" column="endContract" jdbcType="DATE"/>
-            <result property="workage" column="workAge" jdbcType="INTEGER"/>
-            <result property="salaryid" column="salaryId" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="CHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="idcard" column="idCard" jdbcType="CHAR"/>
+        <result property="wedlock" column="wedlock" jdbcType="OTHER"/>
+        <result property="nationid" column="nationId" jdbcType="INTEGER"/>
+        <result property="nativeplace" column="nativePlace" jdbcType="VARCHAR"/>
+        <result property="politicid" column="politicId" jdbcType="INTEGER"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="departmentid" column="departmentId" jdbcType="INTEGER"/>
+        <result property="joblevelid" column="jobLevelId" jdbcType="INTEGER"/>
+        <result property="posid" column="posId" jdbcType="INTEGER"/>
+        <result property="engageform" column="engageForm" jdbcType="VARCHAR"/>
+        <result property="tiptopdegree" column="tiptopDegree" jdbcType="OTHER"/>
+        <result property="specialty" column="specialty" jdbcType="VARCHAR"/>
+        <result property="school" column="school" jdbcType="VARCHAR"/>
+        <result property="begindate" column="beginDate" jdbcType="DATE"/>
+        <result property="workstate" column="workState" jdbcType="OTHER"/>
+        <result property="workid" column="workID" jdbcType="CHAR"/>
+        <result property="contractterm" column="contractTerm" jdbcType="DOUBLE"/>
+        <result property="conversiontime" column="conversionTime" jdbcType="DATE"/>
+        <result property="notworkdate" column="notWorkDate" jdbcType="DATE"/>
+        <result property="begincontract" column="beginContract" jdbcType="DATE"/>
+        <result property="endcontract" column="endContract" jdbcType="DATE"/>
+        <result property="workage" column="workAge" jdbcType="INTEGER"/>
+        <result property="salaryid" column="salaryId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 查询所有员工（分页） -->
+    <resultMap id="EmployeeInfo" type="com.zhangyu.server.pojo.Employee" extends="BaseResultMap">
+        <association property="nation" javaType="com.zhangyu.server.pojo.Nation">
+            <id property="id" column="nid" jdbcType="INTEGER"/>
+            <result property="name" column="nname" jdbcType="VARCHAR"/>
+        </association>
+        <association property="politicsStatus" javaType="com.zhangyu.server.pojo.PoliticsStatus">
+            <id property="id" column="pid" jdbcType="INTEGER"/>
+            <result property="name" column="pname" jdbcType="VARCHAR"/>
+        </association>
+        <association property="department" javaType="com.zhangyu.server.pojo.Department">
+            <id property="id" column="did" jdbcType="INTEGER"/>
+            <result property="name" column="dname" jdbcType="VARCHAR"/>
+        </association>
+        <association property="joblevel" javaType="com.zhangyu.server.pojo.Joblevel">
+            <id property="id" column="jid" jdbcType="INTEGER"/>
+            <result property="name" column="jname" jdbcType="VARCHAR"/>
+        </association>
+        <association property="position" javaType="com.zhangyu.server.pojo.Position">
+            <id property="id" column="posid" jdbcType="INTEGER"/>
+            <result property="name" column="posname" jdbcType="VARCHAR"/>
+        </association>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,gender,
+        id
+        ,name,gender,
         birthday,idCard,wedlock,
         nationId,nativePlace,politicId,
         email,phone,address,
@@ -48,4 +73,56 @@
         notWorkDate,beginContract,endContract,
         workAge,salaryId
     </sql>
+
+    <!-- 查询所有员工信息（分页） -->
+    <select id="getEmployeeByPage" resultMap="EmployeeInfo">
+        SELECT e.*,
+        n.id AS nid,
+        n.`name` AS nname,
+        p.id AS pId,
+        p.`name` AS pname,
+        d.id AS did,
+        d.`name` AS dname,
+        j.id AS jid,
+        j.`name` AS jname,
+        pos.id AS posId,
+        pos.`name` AS posname
+        FROM t_employee e,
+        t_nation n,
+        t_politics_status p,
+        t_department d,
+        t_joblevel j,
+        t_position pos
+        WHERE e.nationId = n.id
+        AND e.politicId = p.id
+        AND e.departmentId = d.id
+        AND e.jobLevelId = j.id
+        AND e.posId = pos.id
+
+        <if test="null!=employee.name and ''!=employee.name">
+            AND e.`name` LIKE CONCAT('%', #{employee.name}, '%')
+        </if>
+        <if test="null!=employee.politicid">
+            AND e.politicId = #{employee.politicid}
+        </if>
+        <if test="null!=employee.nationid">
+            AND e.nationId = #{employee.nationid}
+        </if>
+        <if test="null!=employee.joblevel">
+            AND e.jobLevelId = #{employee.joblevel}
+        </if>
+        <if test="null!=employee.posId">
+            AND e.posId = #{employee.posId}
+        </if>
+        <if test="null!=employee.engageForm">
+            AND e.engageForm = #{employee.engageForm}
+        </if>
+        <if test="null!=employee.departmentId">
+            AND e.departmentId = #{employee.departmentId}
+        </if>
+        <if test="null!=beginDateScope and 2==beginDateScope.length">
+            AND e.beginDate BETWEEN #{beginDateScope[0]} AND #{beginDateScope[1]}
+        </if>
+        ORDER BY e.id
+    </select>
 </mapper>
