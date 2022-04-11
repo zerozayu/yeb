@@ -6,6 +6,7 @@ import com.zhangyu.server.pojo.RespBean;
 import com.zhangyu.server.pojo.RespPageBean;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
 * @author zhangyu
@@ -22,7 +23,7 @@ public interface EmployeeService extends IService<Employee> {
      * @param beginDateScope
      * @return
      */
-    RespPageBean getEmployee(Integer currentPage, Integer size, Employee employee, LocalDate[] beginDateScope);
+    RespPageBean getEmployeeByPage(Integer currentPage, Integer size, Employee employee, LocalDate[] beginDateScope);
 
     /**
      * 获取工号
@@ -36,4 +37,11 @@ public interface EmployeeService extends IService<Employee> {
      * @return
      */
     RespBean addEmp(Employee employee);
+
+    /**
+     * 查询员工信息
+     * @param id
+     * @return
+     */
+    List<Employee> getEmployee(Integer id);
 }
