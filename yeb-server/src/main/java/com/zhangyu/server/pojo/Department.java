@@ -8,8 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,6 +21,9 @@ import java.util.List;
 @Data
 @ApiModel(value = "Department实体类", description = "")
 @TableName(value ="t_department")
+@EqualsAndHashCode(of = "name")
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Department implements Serializable {
     @ApiModelProperty(value = "id")
     @TableId(type = IdType.AUTO)
@@ -27,6 +31,7 @@ public class Department implements Serializable {
 
     @ApiModelProperty(value = "部门名称")
     @Excel(name = "部门")
+    @NonNull
     private String name;
 
     @ApiModelProperty(value = "父id")

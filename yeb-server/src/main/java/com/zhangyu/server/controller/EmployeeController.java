@@ -1,16 +1,21 @@
 package com.zhangyu.server.controller;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import com.zhangyu.server.pojo.*;
 import com.zhangyu.server.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.val;
+import org.apache.poi.ss.formula.functions.Na;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -135,6 +140,41 @@ public class EmployeeController {
                 }
             }
         }
+    }
+
+    @ApiOperation(value = "导入员工数据")
+    @PostMapping(value = "/import")
+    public RespBean importEmployee(@RequestPart MultipartFile file){
+        ImportParams params = new ImportParams();
+        // 去掉标题行
+        params.setTitleRows(1);
+        List<Nation> nationList = nationService.list();
+        List<PoliticsStatus> politicsStatusList = politicsStatusService.list();
+        List<Department> departmentList = departmentService.list();
+        List<Joblevel> joblevelList = joblevelService.list();
+        List<Position> positionList = positionService.list();
+
+        try {
+            List<Employee> list = ExcelImportUtil.importExcel(file.getInputStream(), Employee.class, params);
+            list.forEach(employee ->  {
+                // 民族id
+                employee.setNationid(nationList.get(nationList.indexOf(new Nation(employee.getNation().getName()))).getId());
+                // 政治面貌id
+                employee.setPoliticid(politicsStatusList.get(politicsStatusList.indexOf(new PoliticsStatus(employee.getPoliticsStatus().getName()))).getId());
+                // 部门id
+                employee.setDepartmentid(departmentList.get(departmentList.indexOf(new Department(employee.getDepartment().getName()))).getId());
+                // 职称id
+                employee.setJoblevelid(joblevelList.get(joblevelList.indexOf(new Joblevel(employee.getJoblevel().getName()))).getId());
+                // 职位id
+                employee.setPosid(positionList.get(positionList.indexOf(new Position(employee.getPosition().getName()))).getId());
+            });
+            if (employeeService.saveBatch(list)){
+                return RespBean.success("导入员工数据成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return RespBean.error("导入员工数据失败");
     }
 
 }

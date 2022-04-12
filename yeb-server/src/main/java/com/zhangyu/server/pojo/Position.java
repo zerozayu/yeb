@@ -9,8 +9,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -21,6 +22,9 @@ import java.util.Date;
  */
 @ApiModel(value = "职位信息", description = "实现了UserDetails")
 @Data
+@EqualsAndHashCode(of = "name")
+@RequiredArgsConstructor
+@NoArgsConstructor
 @TableName(value ="t_position")
 public class Position implements Serializable {
 
@@ -30,6 +34,7 @@ public class Position implements Serializable {
 
     @ApiModelProperty(value = "职位")
     @Excel(name = "职位")
+    @NonNull
     private String name;
 
     @ApiModelProperty(value = "创建时间")

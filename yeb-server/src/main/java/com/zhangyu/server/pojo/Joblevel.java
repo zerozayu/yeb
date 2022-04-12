@@ -8,8 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,6 +19,9 @@ import java.time.LocalDateTime;
  * @TableName t_joblevel
  */
 @Data
+@EqualsAndHashCode(of = "name")
+@RequiredArgsConstructor
+@NoArgsConstructor
 @TableName(value ="t_joblevel")
 @ApiModel(value = "职称实体", description = "")
 public class Joblevel implements Serializable {
@@ -28,6 +32,7 @@ public class Joblevel implements Serializable {
 
     @ApiModelProperty(value = "职称名称")
     @Excel(name = "职称")
+    @NonNull
     private String name;
 
     @ApiModelProperty(value = "职称等级")
