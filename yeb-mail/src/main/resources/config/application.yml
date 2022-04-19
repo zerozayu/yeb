@@ -1,0 +1,27 @@
+server:
+  port: 8082
+
+spring:
+  # 邮件配置
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    default-encoding: utf-8
+    password: wfsbfcjkjvtgcaif
+    username: zhangyu304@qq.com
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+
+  rabbitmq:
+    username: zhangyu
+    password: zhangyu
+    host: localhost
+    port: 5672
+

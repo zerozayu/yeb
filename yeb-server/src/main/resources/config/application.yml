@@ -49,6 +49,12 @@ spring:
         # 最小空闲连接
         min-idle: 5
 
+  rabbitmq:
+    username: zhangyu
+    password: zhangyu
+    host: localhost
+    port: 5672
+
 
 
 

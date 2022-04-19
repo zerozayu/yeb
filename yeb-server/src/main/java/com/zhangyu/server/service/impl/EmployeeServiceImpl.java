@@ -9,6 +9,8 @@ import com.zhangyu.server.pojo.Employee;
 import com.zhangyu.server.pojo.RespBean;
 import com.zhangyu.server.pojo.RespPageBean;
 import com.zhangyu.server.service.EmployeeService;
+import org.springframework.amqp.rabbit.connection.RabbitAccessor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
 
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 获取所有员工信息（分页）
@@ -74,6 +78,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee>
         DecimalFormat decimalFormat = new DecimalFormat("##.00");
         employee.setContractterm(Double.parseDouble(decimalFormat.format(days / 365.00)));
         if (1 == employeeMapper.insert(employee)) {
+            // 发送信息
+            Employee emp = employeeMapper.getEmployee(employee.getId()).get(0);
+            rabbitTemplate.convertAndSend("mail.welcome", emp);
+
             return RespBean.success("添加员工成功");
         }
         return RespBean.error("添加员工失败");
